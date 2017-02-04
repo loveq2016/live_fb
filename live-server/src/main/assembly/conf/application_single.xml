@@ -1,0 +1,41 @@
+<!--
+ **********************************************************************
+
+ Copyright (c) 2003-2013 ZeroC, Inc. All rights reserved.
+
+ This copy of Ice is licensed to you under the terms described in the
+ ICE_LICENSE file included in this distribution.
+
+ **********************************************************************
+-->
+
+<icegrid>
+
+  <application name="LiveService">
+
+    <node name="node1">
+      <server id="LiveServer" exe="java" activation="on-demand">
+        <option>-classpath</option>
+		<option>../conf</option>
+		<option>-Djava.ext.dirs=../lib</option>
+        <option>com.fsmeeting.live.server.LiveServer</option>
+        
+        
+		<!-- <adapter name="LiveServerAdapter" endpoints="tcp -h localhost -p 33001"> -->
+		<adapter name="LiveServerAdapter">
+		  <object identity="appService" type="::com::fsmeeting::live::server::ice::AppServiceMgr" property="appServiceIdentity"/>
+	     
+		</adapter>
+
+        <property name="IceMX.Metrics.Debug.GroupBy" value="id"/>
+        <property name="IceMX.Metrics.Debug.Disabled" value="1"/>
+        <property name="IceMX.Metrics.ByParent.GroupBy" value="parent"/>
+        <property name="IceMX.Metrics.ByParent.Disabled" value="1"/>
+        
+        <property name="Ice.ThreadPool.Server.SizeMax" value="20"/>
+      </server>
+    </node>
+
+  </application>
+
+</icegrid>

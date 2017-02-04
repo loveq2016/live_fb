@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fsmeeting.live.mapper.LiveRoomMapper">
+
+	<select id="getLiveService" resultType="com.fsmeeting.live.common.bean.LiveRoomRuntime">
+		SELECT
+			*
+		FROM t_liveroom_runtime
+		WHERE liveRoomId = #{liveRoomId}
+			AND status = #{status}
+	</select>
+	
+	<select id="getLiveRoom" parameterType="java.lang.Integer" resultType="com.fastonz.live.sliceprotocol.model.LiveRoomModel">
+		SELECT
+			*
+		FROM t_liveroom
+		WHERE id = #{liveRoomId}
+	</select>
+	
+	<update id="activeLiveRoom" parameterType="java.lang.Integer">
+		UPDATE
+			t_liveroom_runtime
+		SET status = '1' , activeTime = sysdate()
+		WHERE liveRoomId = #{liveRoomId}
+	</update>
+	
+	<delete id="deleteRuntimeInfo" parameterType="java.lang.Integer">
+		DELETE
+		FROM t_liveroom_runtime
+		WHERE liveRoomId = #{liveRoomId}
+	</delete>
+	
+	<insert id="addRoomRuntime" parameterType="com.fsmeeting.live.common.bean.LiveRoomRuntime">
+		INSERT INTO t_liveroom_runtime (
+		  liveRoomId,
+		  liveSrvAddr,
+		  assignTime,
+		  status
+		) 
+		VALUES
+		  (
+		  	#{liveRoomId},
+		  	#{liveSrvAddr},
+		  	sysdate(),
+		  	#{status}
+		  )
+	</insert>
+	
+	<update id="updateLiveAddress" parameterType="com.fsmeeting.live.common.bean.LiveRoomRuntime">
+		UPDATE
+			t_liveroom_runtime
+		SET liveSrvAddr = #{liveSrvAddr}
+		WHERE liveRoomId = #{liveRoomId}
+	</update>
+</mapper>

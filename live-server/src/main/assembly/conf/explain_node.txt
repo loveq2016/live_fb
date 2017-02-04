@@ -1,0 +1,9 @@
+节点服务器
+
+config.node：
+IceGrid.Registry.Client.Endpoints配置客户端连接从注册器的地址；IceGrid.Registry.ReplicaName配置注册器名称
+Ice.Default.Locator配置远端主服务器地址
+以及本地节点的配置，节点的名称要跟主服务器中application_more.xml配置的保持一致
+
+
+start_node.bat：启动节点命令

@@ -1,0 +1,18 @@
+单个服务器部署
+application_single.xml：发布程序主入口、业务处理脚本、依赖外部架包，及对外发布服务的相关配置
+update_single_app.bat：在服务器运行过程中，如果application_single.xml文件有更新，运行这个脚本，不需要重启服务器
+start_single.bat：启动服务器
+
+分布式服务器部署
+application_more.xml：发布程序主入口、业务处理脚本、依赖外部架包，及对外发布服务的相关配置。在分布式部署环境中，有多少个节点，在xml文件中就增加对应节点，节点名称要跟节点服务器config.node文件配置的一一对应
+update_more_app.bat：在服务器运行过程中，如果application_more.xml文件有更新，运行这个脚本，不需要重启服务器
+start_more.bat：启动服务器
+
+
+icegrid参数配置
+config.grid：请求主入口，定义了服务器对外的请求协议地址，端口号。配置包含了，有一个注册器、一个节点。单个服务器部署和分布式服务器部署共用一份config.grid配置文件
+
+
+ice提供有主服务器、节点的管理界面
+启动方式，在ice安装目录bin下运行
+java -jar IceGridGUI.jar

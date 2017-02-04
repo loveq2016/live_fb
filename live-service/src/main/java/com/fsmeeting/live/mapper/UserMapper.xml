@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fsmeeting.live.mapper.UserMapper">
+
+	<select id="getLiveRoomInfo" parameterType="java.lang.String" resultType="com.fsmeeting.live.common.bean.LiveRoom">
+		SELECT 
+		  * 
+		FROM
+		  t_liveroom 
+		WHERE liveURI = #{liveURI} 
+			AND startTime <![CDATA[ <= ]]> SYSDATE()
+			AND endTime <![CDATA[ >= ]]> SYSDATE()
+		LIMIT 1 
+	</select>
+	
+	<select id="countOnlineUser" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_tokeninfo WHERE STATUS = 1 AND liveId = #{liveId} 
+	</select>
+
+
+	<insert id="addTokenInfo" parameterType="com.fsmeeting.live.common.bean.TokenInfo">
+		INSERT INTO 
+			t_tokeninfo (userId, token, liveId, appId, status) 
+		VALUES
+			(#{userId}, #{token}, #{liveId}, #{appId}, 0)
+	</insert>
+	
+	<select id="pickProxyServer" resultType="com.fsmeeting.live.common.bean.LiveService">
+		
+	</select>
+	
+	<update id="updateToken" parameterType="com.fsmeeting.live.common.bean.TokenInfo">
+		UPDATE `t_tokeninfo` 
+			SET STATUS =#{status}
+			<if test="1==status">
+				,activeTime = sysdate()
+			</if>
+		WHERE 
+			1 = 1
+			<if test="userId!=null and userId!=''">
+				AND userId = #{userId} 
+			</if>
+			<if test="token!=null and token!=''">
+				AND token = #{token} 
+			</if>
+			<if test="appId!=null and appId!=''">
+				AND appId = #{appId}
+			</if>
+			<if test="liveId!=null and liveId!=''">
+				AND liveId = #{liveId}
+			</if>
+			
+	</update>
+	
+	<delete id="releaseToken" parameterType="com.fsmeeting.live.common.bean.TokenInfo">
+		DELETE FROM 
+			`t_tokeninfo` 
+		WHERE 
+			1 = 1
+			<if test="userId!=null and userId!=''">
+				AND userId = #{userId} 
+			</if>
+			<if test="token!=null and token!=''">
+				AND token = #{token} 
+			</if>
+			<if test="appId!=null and appId!=''">
+				AND appId = #{appId}
+			</if>
+			<if test="liveId!=null and liveId!=''">
+				AND liveId = #{liveId}
+			</if>
+	</delete>
+	
+	<select id="countLegalToken" parameterType="com.fsmeeting.live.common.bean.TokenInfo" resultType="java.lang.Integer">
+		SELECT
+			count(1)
+		FROM  t_tokeninfo
+		WHERE token =#{token}
+			AND userId=#{userId}
+			AND STATUS='0'
+	</select>
+</mapper>
