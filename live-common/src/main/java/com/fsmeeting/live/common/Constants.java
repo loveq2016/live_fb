@@ -53,7 +53,6 @@ public class Constants {
 			 * 房间token列表前缀
 			 */
 			public static final String TOKENS_SORTED_SET_IN_LIVEROOM_PREFIXER = "token:set:in:room:id:";
-			
 
 			/**
 			 * 用户房间&token对应关系映射
@@ -96,4 +95,14 @@ public class Constants {
 			public static final String NAME = "T_LiveRoom";
 		}
 	}
+
+	/**
+	 * 用户ID范围最大值
+	 */
+	public static final int USERID_RANGE_MAX = 0x5FFFFFFF;
+
+	/**
+	 * 用户ID范围最小值
+	 */
+	public static final int USERID_RANGE_MIN = 0x50000000;
 }
